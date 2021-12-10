@@ -12,8 +12,8 @@
  */
 
 void loop() {
-  setAccel(1000);
-  rightturn();
+  setAccel(5000);
+  moveMM(20);
   
   runMotors();
 }

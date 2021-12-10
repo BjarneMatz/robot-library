@@ -9,7 +9,7 @@
 //calculations
 //#############
 #define diameter 100 //set to mm of wheel diameter
-#define steps 1600 //set to steps per revolution
+#define steps 400 //set to steps per revolution
 #define maxkmh 1 //set to max speed to drive in km/h
 
 float wheel = diameter * 3.141592; //circumference of wheel in mm
@@ -113,10 +113,16 @@ void moveSteps(int i) {
   smRR.moveTo(i);
 }
 void rightturn(){
+
+  smFL.setSpeed(3000);
+  smRL.setSpeed(3000);
   smFL.moveTo(1000);
   smRL.moveTo(1000);
-  smFR.moveTo(-1000);
-  smRR.moveTo(-1000);
+
+  smFR.setSpeed(250);
+  smRR.setSpeed(250);
+  smFR.moveTo(500);
+  smRR.moveTo(500);
 }
 
 
