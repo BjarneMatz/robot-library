@@ -1,0 +1,4 @@
+//motor settings
+const float diameter = 1;//set to mm of wheel diameter
+const int steps = 1600; //set to steps per revolution
+const int maxkmh = 1; //set to max speed to drive in km/h
