@@ -12,9 +12,9 @@
  */
 
 void loop() {
-  
+  serialCommand();
   setAccel(1000);
-  moveMM(100);
+  moveMM(-10);
   
   runMotors();
 }

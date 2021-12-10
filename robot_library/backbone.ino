@@ -1,11 +1,16 @@
 //librarys
 #include <AccelStepper.h>
 #include <MultiStepper.h>
-
+#define NOTE_C6  1047
+#define NOTE_C7  2093
+//motor and wheel settings
 
 //#############
 //calculations
 //#############
+#define diameter 100 //set to mm of wheel diameter
+#define steps 1600 //set to steps per revolution
+#define maxkmh 1 //set to max speed to drive in km/h
 
 float wheel = diameter * 3.141592; //circumference of wheel in mm
 float meter = steps / wheel * 1000; //1 meter = 'meter' steps
@@ -33,9 +38,15 @@ int maxspeed = maxms * meter; //m/s -> steps/s
 #define dirPinRL 6
 #define stepPinRL 7
 
+
+
+
 //stepper motor rear right
-#define dirPinRR 10
-#define stepPinRR 11
+#define dirPinRR 11
+#define stepPinRR 12
+
+
+
 
 //assign motors to variables
 AccelStepper smFL = AccelStepper(motorInterfaceType, stepPinFL, dirPinFL);
@@ -43,17 +54,32 @@ AccelStepper smFR = AccelStepper(motorInterfaceType, stepPinFR, dirPinFR);
 AccelStepper smRL = AccelStepper(motorInterfaceType, stepPinRL, dirPinRL);
 AccelStepper smRR = AccelStepper(motorInterfaceType, stepPinRR, dirPinRR);
 
+#define RGBR 8
+#define RGBG 9
+#define RGBB 10
+
+#define buzzer 22
+
+
+
 void setup() {
   Serial.begin(9600);
-  Serial.println("Motor Data:");
-  Serial.print("Steps per Revolution: ");
-  Serial.println(steps);
-  Serial.print("Steps per Meter: ");
-  Serial.println(meter);
-  Serial.print("Steps: ");
-  Serial.println(maxspeed);
+  //clear console
 
-  
+  //initialize rgb pins
+  pinMode(RGBR, OUTPUT);
+  pinMode(RGBG, OUTPUT);
+  pinMode(RGBB, OUTPUT);
+
+  //run start sequence
+  analogWrite(RGBR, 255);
+  tone(buzzer, NOTE_C6, 100);
+  delay(100);
+  tone(buzzer, NOTE_C7, 100);
+  Serial.println("booting...");
+  delay(10000);
+
+
   //set max speed according to calculations
   smFL.setMaxSpeed(maxspeed);
   smFR.setMaxSpeed(maxspeed);
@@ -63,7 +89,7 @@ void setup() {
 }
 
 
-void runMotors(){
+void runMotors() {
   //run all motors with corresponding settings
   smFL.run();
   smFR.run();
@@ -71,7 +97,7 @@ void runMotors(){
   smRR.run();
 }
 
-void setAccel(int i){
+void setAccel(int i) {
   //set accelerations for motors
   smFL.setAcceleration(i);
   smFR.setAcceleration(i);
@@ -79,7 +105,7 @@ void setAccel(int i){
   smRR.setAcceleration(i);
 }
 
-void moveSteps(int i){
+void moveSteps(int i) {
   //move motors to specific point
   smFL.moveTo(i);
   smFR.moveTo(i);
@@ -88,7 +114,8 @@ void moveSteps(int i){
 }
 
 
-void moveMM(int i){
+
+void moveMM(int i) {
   float e = meter / 1000 * i;
   smFL.moveTo(e);
   smFR.moveTo(e);
