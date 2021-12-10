@@ -1,20 +1,3 @@
-
-
-
-void setup() {
-  //set max speed according to calculations
-  smFL.setMaxSpeed(maxspeed);
-  smFR.setMaxSpeed(maxspeed);
-  smRL.setMaxSpeed(maxspeed);
-  smRR.setMaxSpeed(maxspeed);
-}
-
-void loop() {
-  setAccel(500);
-  moveSteps(10000);
-  runMotors();
-}
-
 void runMotors(){
   //run all motors with corresponding settings
   smFL.run();
@@ -24,6 +7,7 @@ void runMotors(){
 }
 
 void setAccel(int i){
+  //set accelerations for motors
   smFL.setAcceleration(i);
   smFR.setAcceleration(i);
   smRL.setAcceleration(i);
@@ -31,6 +15,7 @@ void setAccel(int i){
 }
 
 void moveSteps(int i){
+  //move motors to specific point
   smFL.moveTo(i);
   smFR.moveTo(i);
   smRL.moveTo(i);
