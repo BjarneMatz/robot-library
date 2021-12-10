@@ -12,7 +12,9 @@
  */
 
 void loop() {
-  setAccel(500);
-  moveSteps(10000);
+  
+  setAccel(1000);
+  moveMM(100);
+  
   runMotors();
 }
