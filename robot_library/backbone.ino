@@ -77,7 +77,7 @@ void setup() {
   delay(100);
   tone(buzzer, NOTE_C7, 100);
   Serial.println("booting...");
-  delay(10000);
+delay(1000);
 
 
   //set max speed according to calculations
@@ -112,7 +112,12 @@ void moveSteps(int i) {
   smRL.moveTo(i);
   smRR.moveTo(i);
 }
-
+void rightturn(){
+  smFL.moveTo(1000);
+  smRL.moveTo(1000);
+  smFR.moveTo(-1000);
+  smRR.moveTo(-1000);
+}
 
 
 void moveMM(int i) {
