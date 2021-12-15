@@ -8,22 +8,23 @@
 //#############
 //calculations
 //#############
+//roboter config
 #define diameter 100 //set to mm of wheel diameter
 #define steps 400 //set to steps per revolution
 #define maxkmh 1 //set to max speed to drive in km/h
 
+//calculate various speed units
 float wheel = diameter * 3.141592; //circumference of wheel in mm
 float meter = steps / wheel * 1000; //1 meter = 'meter' steps
 float maxms = maxkmh / 3.6; //km/h -> m/s
 int maxspeed = maxms * meter; //m/s -> steps/s
 
 
-
 //############################
 //define pinout of all motors
 //############################
 
-//motorinterface master master
+//motorinterface master
 #define motorInterfaceType 1
 
 //stepper motor front left
@@ -38,15 +39,9 @@ int maxspeed = maxms * meter; //m/s -> steps/s
 #define dirPinRL 6
 #define stepPinRL 7
 
-
-
-
 //stepper motor rear right
 #define dirPinRR 11
 #define stepPinRR 12
-
-
-
 
 //assign motors to variables
 AccelStepper smFL = AccelStepper(motorInterfaceType, stepPinFL, dirPinFL);
@@ -54,6 +49,7 @@ AccelStepper smFR = AccelStepper(motorInterfaceType, stepPinFR, dirPinFR);
 AccelStepper smRL = AccelStepper(motorInterfaceType, stepPinRL, dirPinRL);
 AccelStepper smRR = AccelStepper(motorInterfaceType, stepPinRR, dirPinRR);
 
+//pinout off signal rgb led and speaker
 #define RGBR 8
 #define RGBG 9
 #define RGBB 10
@@ -65,6 +61,9 @@ AccelStepper smRR = AccelStepper(motorInterfaceType, stepPinRR, dirPinRR);
 void setup() {
   Serial.begin(9600);
   //clear console
+  for(int i=0; i<10; i++){
+    Serial.println("");
+  }
 
   //initialize rgb pins
   pinMode(RGBR, OUTPUT);
@@ -77,7 +76,7 @@ void setup() {
   delay(100);
   tone(buzzer, NOTE_C7, 100);
   Serial.println("booting...");
-delay(1000);
+  delay(1000);
 
 
   //set max speed according to calculations
@@ -113,21 +112,11 @@ void moveSteps(int i) {
   smRR.moveTo(i);
 }
 void rightturn(){
-
-  smFL.setSpeed(3000);
-  smRL.setSpeed(3000);
-  smFL.moveTo(1000);
-  smRL.moveTo(1000);
-
-  smFR.setSpeed(250);
-  smRR.setSpeed(250);
-  smFR.moveTo(500);
-  smRR.moveTo(500);
 }
 
 
 void moveMM(int i) {
-  float e = meter / 1000 * i;
+  float e = meter / 1000 * i; //calculate steps out of supplied millimeters
   smFL.moveTo(e);
   smFR.moveTo(e);
   smRL.moveTo(e);

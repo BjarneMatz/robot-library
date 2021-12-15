@@ -7,6 +7,9 @@
  * moveSteps(int);
  * mvoe x steps
  * 
+ * moveMM(int);
+ * move x millimeters
+ * 
  * runMotors();
  * run commands for all motors
  */
